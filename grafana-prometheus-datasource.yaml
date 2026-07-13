@@ -1,0 +1,21 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: grafana-datasources-mesh
+  namespace: monitoring
+  labels:
+    grafana_datasource: '1'
+data:
+  prometheus.yaml: |-
+    apiVersion: 1
+    datasources:
+    - name: Prometheus-Mesh
+      type: prometheus
+      access: proxy
+      url: http://cluster.local
+      jsonData:
+        tlsSkipVerify: true
+        httpHeaderName1: 'X-Linkerd-Skip-Auth'
+      secureJsonData:
+        httpHeaderValue1: 'true'
+      editable: true
